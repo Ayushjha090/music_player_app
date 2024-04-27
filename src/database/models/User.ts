@@ -1,11 +1,9 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../sequelize";
-import { emit } from "process";
 
 const User = sequelize.define("User", {
   id: {
-    type: DataTypes.UUIDV4,
-    autoIncrement: true,
+    type: DataTypes.UUID,
     primaryKey: true,
   },
   firstName: {
@@ -59,6 +57,6 @@ const User = sequelize.define("User", {
   },
 });
 
-console.log(User === sequelize.models.User);
+User.sync();
 
 export default User;
