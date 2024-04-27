@@ -7,7 +7,7 @@ const UserRegistrationSchema: Schema = Joi.object().keys({
   lastName: Joi.string().min(3).max(65).optional(),
   email: Joi.string().email().message("Invalid email").required(),
   password: Joi.string().min(8).regex(passwordRegex).required(),
-  dateOfBirth: Joi.string().isoDate().regex(dateRegex).required().optional(),
+  dateOfBirth: Joi.string().regex(dateRegex).required().optional(),
   gender: Joi.string()
     .valid("male", "female", "other", "donotdisclose")
     .optional(),
