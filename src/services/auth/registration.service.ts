@@ -1,14 +1,16 @@
 const { v4: uuidv4 } = require("uuid");
 
 import { Registration } from "../../types/user";
-import User from "../../database/models/User";
+import models from "../../database/models";
 import CustomError from "../../utils/CustomError";
 import passwordService from "../password/index";
 
 const RegisterUser = async (userDetails: Registration): Promise<void> => {
   try {
     const { email } = userDetails;
-    const existingUser = await User.findOne({ where: { email: email } });
+    const existingUser = await models.userModel.findOne({
+      where: { email: email },
+    });
     if (existingUser) {
       throw new CustomError(409, "User with this email already exists");
     }
@@ -26,7 +28,7 @@ const RegisterUser = async (userDetails: Registration): Promise<void> => {
       id: userId,
       subscription: "trial",
     };
-    const newUser = await User.create({ ...newUserDetails });
+    const newUser = await models.userModel.create({ ...newUserDetails });
   } catch (error) {
     throw error;
   }

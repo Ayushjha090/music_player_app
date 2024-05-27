@@ -1,11 +1,21 @@
-import sequelize from "../sequelize";
-
 // Importing Models
 import UserModel from "./User";
+import SessionModel from "./Session";
 
-// Synchronize Model
-UserModel.sync({ alter: true });
-
-export default {
-  UserModel,
+const syncModels = async () => {
+  try {
+    await UserModel.sync({ alter: true });
+    await SessionModel.sync({ alter: true });
+  } catch (error) {
+    throw error;
+  }
 };
+
+syncModels();
+
+const models = {
+  userModel: UserModel,
+  sessionModel: SessionModel,
+};
+
+export default models;
