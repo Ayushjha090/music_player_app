@@ -1,3 +1,13 @@
-import Registration from "./registration";
+export type Registration = {
+  firstName: string;
+  lastName: string | null;
+  email: string;
+  password: string;
+  dateOfBirth: string | null;
+  gender: string | null;
+};
 
-export { Registration };
+export type OTP = {
+  email: string;
+  password: string;
+};
