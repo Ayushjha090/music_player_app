@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 
 // * Middleware and Schema Import
 import ValidationMiddleware from "../middlewares/validation";
+import authenticationMiddleware from "../middlewares/auth";
 import UserRegistrationSchema from "../schema/userRegistration.schema";
 import OTPSchema from "../schema/OTP.schema";
 import UserAuthenticationSchema from "../schema/userAuthentication.schema";
@@ -13,6 +14,11 @@ const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "Welcome to my music player" });
+});
+
+router.get("/me", authenticationMiddleware, (req: any, res: any) => {
+  console.log("me controller");
+  return res.status(200).send({ message: "Me Controller" });
 });
 
 router.post(

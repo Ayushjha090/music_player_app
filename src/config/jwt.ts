@@ -41,6 +41,9 @@ export const signToken = (payload: any): string => {
 
 export const verifyToken = (token: string) => {
   try {
+    if (!publicKey) {
+      throw new Error("Public key is required for JWT token");
+    }
     const decodedToken = jwt.verify(token, publicKey, {
       algorithm: "RS256",
     });

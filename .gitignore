@@ -3,7 +3,7 @@ node_modules/
 
 # Environment Variables
 .env
-keys/
+src/keys/
 
 # Packgage-Lock
 package-lock.json
