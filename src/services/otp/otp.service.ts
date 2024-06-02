@@ -33,7 +33,6 @@ const GenerateOTP = async ({ email, password }: OTP): Promise<void> => {
       where: { userID: userID },
     });
     if (existingOTP) {
-      console.log("here", existingOTP);
       otpObject = generateOTPObject();
       await models.otpModel.update(
         { otp: otpObject.otp, expires_at: otpObject.expirationTime },

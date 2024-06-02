@@ -1,11 +1,13 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 
 import CustomError from "../utils/CustomError";
 import { verifyToken } from "../config/jwt";
 import models from "../database/models";
+import { DecodedToken } from "../types/jwt";
+import { AuthenticatedRequest } from "../types/auth";
 
 const authenticationMiddleware = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -18,12 +20,18 @@ const authenticationMiddleware = async (
     if (!token) {
       throw new CustomError(401, "Unauthorized request");
     }
-    const decodedToken = verifyToken(token);
+    const decodedToken: DecodedToken = verifyToken(token);
     if (!decodedToken) {
       throw new CustomError(401, "Unauthorized request");
     }
-    const userID = decodedToken.id;
-    // const session = await models.sessionModel.findOne({where: {}})
+    const { userId: userID, id: sessionID } = decodedToken;
+    const session = await models.sessionModel.findOne({
+      where: { id: sessionID },
+    });
+    if (!session || !session.dataValues || session.dataValues.revoked) {
+      throw new CustomError(401, "Unauthorized request");
+    }
+    req.user = { userID };
     next();
   } catch (error) {
     next(error);

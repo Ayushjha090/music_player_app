@@ -45,7 +45,8 @@ const createSession = async ({
       new Date().getTime() + 2 * 24 * 60 * 60 * 1000
     );
     const token = signToken({
-      id: userID,
+      id: sessionID,
+      userId: userID,
       expirationTime: tokenExpirationTime,
     });
     if (!token) {

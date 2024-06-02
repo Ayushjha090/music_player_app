@@ -16,10 +16,7 @@ router.get("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "Welcome to my music player" });
 });
 
-router.get("/me", authenticationMiddleware, (req: any, res: any) => {
-  console.log("me controller");
-  return res.status(200).send({ message: "Me Controller" });
-});
+router.get("/me", authenticationMiddleware, authController.meController);
 
 router.post(
   "/register",
