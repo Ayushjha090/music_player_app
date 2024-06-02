@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import createSessionService from "../../services/auth/authentication.service";
+import authService from "../../services/auth";
 import CustomError from "../../utils/CustomError";
 
 const authenticationController = async (
@@ -10,7 +10,7 @@ const authenticationController = async (
 ): Promise<Response | void> => {
   try {
     const { email, password, oneTimePassword } = req.body;
-    const userDetails = await createSessionService({
+    const userDetails = await authService.sessionCreationService({
       email,
       password,
       oneTimePassword,
@@ -21,13 +21,11 @@ const authenticationController = async (
         "Unable to process the request, please try again later"
       );
     }
-    return res
-      .status(200)
-      .send({
-        error: false,
-        data: { userDetails },
-        message: "Session created successfully",
-      });
+    return res.status(200).send({
+      error: false,
+      data: { userDetails },
+      message: "Session created successfully",
+    });
   } catch (error) {
     next(error);
   }

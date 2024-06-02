@@ -17,3 +17,18 @@ export type Authentication = {
   password: string;
   oneTimePassword: string;
 };
+
+export type UserDetails = {
+  id: string;
+  firstName: string;
+  lastName: string | null;
+  userName: string;
+  email: string;
+  dateOfBirth: string;
+  gender: string | null;
+  contact: string | null;
+  subscription: string;
+  createdAt: string;
+  updatedAt: string;
+  token: string;
+};

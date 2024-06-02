@@ -5,12 +5,13 @@ import { Authentication } from "../../types/user";
 import models from "../../database/models";
 import CustomError from "../../utils/CustomError";
 import { signToken } from "../../config/jwt";
+import { UserDetails } from "../../types/user";
 
 const createSession = async ({
   email,
   password,
   oneTimePassword,
-}: Authentication): Promise<any | void> => {
+}: Authentication): Promise<UserDetails | void> => {
   try {
     const user = await models.userModel.findOne({ where: { email } });
     if (!user) {

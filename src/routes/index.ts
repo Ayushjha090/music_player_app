@@ -7,9 +7,7 @@ import OTPSchema from "../schema/OTP.schema";
 import UserAuthenticationSchema from "../schema/userAuthentication.schema";
 
 // * Controller Import
-import registerController from "../controllers/auth/registeration.contoller";
-import OTPController from "../controllers/auth/otp.controller";
-import authenticationController from "../controllers/auth/authentication.controller";
+import authController from "../controllers/auth";
 
 const router = express.Router();
 
@@ -20,19 +18,19 @@ router.get("/", (req: Request, res: Response) => {
 router.post(
   "/register",
   ValidationMiddleware(UserRegistrationSchema, "body"),
-  registerController
+  authController.registrationController
 );
 
 router.post(
   "/auth/otp",
   ValidationMiddleware(OTPSchema, "body"),
-  OTPController
+  authController.generateOTPController
 );
 
 router.post(
   "/login",
   ValidationMiddleware(UserAuthenticationSchema, "body"),
-  authenticationController
+  authController.authenticationController
 );
 
 export default router;
