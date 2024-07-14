@@ -3,6 +3,10 @@ node_modules/
 
 # Environment Variables
 .env
+src/keys/
+
+# Dist
+dist/
 
 # Packgage-Lock
 package-lock.json
